@@ -1,42 +1,43 @@
 import * as React from "react";
+import styled from "styled-components";
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif"
-};
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4
-};
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0
-};
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30
-};
-
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%"
-};
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25
-};
+const Main = styled.main`
+  color: #232129;
+  padding: 96px;
+  font-family: -apple-system, Roboto, sans-serif, serif;
+`;
+const Code = styled.code`
+  color: #8a6534;
+  padding: 4px;
+  background-color: #fff4db;
+  font-size: 1.25rem;
+  border-radius: 4px;
+  padding: 20px;
+  margin-left: -20px;
+`;
+const List = styled.ul`
+  margin-bottom: 96px;
+  padding-left: 0;
+`;
+const ListItem = styled.li`
+  font-weight: 300;
+  font-size: 24px;
+  max-width: 560px;
+  margin-bottom: 30px;
+`;
+const Link = styled.a`
+  color: #8954a8;
+  font-weight: bold;
+  font-size: 16px;
+  vertical-align: 5%;
+`;
+const Description = styled.p`
+  color: #232129;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  line-height: 1.25;
+`;
 
 const links = [
   {
@@ -78,29 +79,21 @@ const links = [
 
 const IndexPage = () => {
   return (
-    <main style={pageStyles}>
-      <p>
-        <code style={codeStyles}>@prabhasp</code>
-      </p>
+    <Main>
+      <Code>@prabhasp </Code>
       <br />
       <br />
-      <ul style={listStyles}>
+      <List>
         {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a style={linkStyle} href={link.url}>
-                {link.text}
-              </a>
-              {link.description.map(line => (
-                <p key={line} style={descriptionStyle}>
-                  {line}
-                </p>
-              ))}
-            </span>
-          </li>
+          <ListItem key={link.url} style={{ color: link.color }}>
+            <Link href={link.url}>{link.text}</Link>
+            {link.description.map(line => (
+              <Description key={line}>{line}</Description>
+            ))}
+          </ListItem>
         ))}
-      </ul>
-    </main>
+      </List>
+    </Main>
   );
 };
 
