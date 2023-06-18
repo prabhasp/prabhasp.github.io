@@ -174,6 +174,27 @@ const SampleData = [
   { points: 1.75, interestRate: 6.375, monthlyPayment: 4336 }
 ];
 
+const bem = `
+(pointsCost, monthlyPaymentSavings, savingRateAPR) => {
+
+  if (monthlyPaymentSavings < 0 || pointsCost < 0 || savingRateAPR < 0) {
+    return -1; // invalid input
+  }
+
+  var month = 0,
+    savingsAcct = pointsCost; // points cost goes into the savings account
+
+  while (savingsAcct > 0) {
+    // add interest, subtract monthly payment
+    savingsAcct += savingsAcct * (savingRateAPR / 12) - monthlyPaymentSavings;
+    month++;
+  }
+
+  return month;
+
+}`;
+const breakEvenMonths = eval(bem);
+
 const Rows = ({
   loanAmount,
   savingsRate
@@ -284,22 +305,6 @@ const Rows = ({
   );
 };
 
-function breakEvenMonths(pointsCost, monthlyPaymentSavings, savingRateAPR) {
-  if (monthlyPaymentSavings < 0 || pointsCost < 0 || savingRateAPR < 0) {
-    return -1; // invalid input
-  }
-
-  var month = 0,
-    savingsAcct = pointsCost; // points cost goes into the savings account
-
-  while (savingsAcct > 0) {
-    // add interest, subtract monthly payment
-    savingsAcct += savingsAcct * (savingRateAPR / 12) - monthlyPaymentSavings;
-    month++;
-  }
-  return month;
-}
-
 const PercentInput = ({
   pct,
   setPct,
@@ -335,7 +340,7 @@ const footer = `
 ## Epilogue: the formula
 
 Most of these calculations are simple; calculating the break-even is the only involved part. 
-The math we use above is this (note: we assume that the interest compounds monthly):
+The math we use above is this:
 `;
 
 const NewPage = () => {
@@ -346,7 +351,7 @@ const NewPage = () => {
         <Calculator />
         <ReactMarkdown children={footer} />
         <pre>
-          <code>{breakEvenMonths.toString()}</code>
+          <code>{bem}</code>
         </pre>
       </Article>
     </Page>
