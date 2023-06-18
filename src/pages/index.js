@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import "../global.css";
 
 const Main = styled.main`
   color: #232129;
